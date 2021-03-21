@@ -118,10 +118,14 @@ namespace Whyvra.Blazor.Forms
             return this;
         }
 
-        public FormBuilder<T> WithIcon(string icon)
+        public FormBuilder<T> WithIcon(string icon, string size = "")
         {
             var elem = _elements[_current];
-            elem.Icon = icon;
+            elem.Icon = new IconElement
+            {
+                Name = icon,
+                Size = size
+            };
 
             return this;
         }

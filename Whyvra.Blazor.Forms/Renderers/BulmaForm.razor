@@ -2,9 +2,9 @@
 @inherits FormRenderer<T>
 
 <form>
-    <div class="field">
-        @foreach (var elem in FormModel.Elements.Where(x => x is InputElement input && !input.IsHidden).Select(x => (InputElement) x))
-        {
+    @foreach (var elem in FormModel.Elements.Where(x => x is InputElement input && !input.IsHidden).Select(x => (InputElement) x))
+    {
+        <div class="field">
             @if (elem is TextAreaElement textArea)
             {
                 <label for="@(textArea.Name)">@(textArea.DisplayName)</label>
@@ -21,17 +21,15 @@
             }
             else if (elem is TagsInputElement tagsInput)
             {
-                <div class="field">
-                    <label for="@(tagsInput.Name)">@(tagsInput.DisplayName)</label>
-                    <div class="control" @onfocusout="@(() => ValidateElement(tagsInput))">
-                        <BulmaTagsInput
-                            Data="@(tagsInput.Get(FormModel.DataModel) as IEnumerable<string>)"
-                            EmptyValue="@tagsInput.EmptyValue"
-                            IsReadOnly="@(FormState == FormState.ReadOnly)"
-                            Placeholder="@(tagsInput.Placeholder)"
-                            DataChanged="@((tags) => tagsInput.Set(FormModel.DataModel, tags))" />
-                        <ValidationMessage Messages="@tagsInput.ValidationMessages" />
-                    </div>
+                <label for="@(tagsInput.Name)">@(tagsInput.DisplayName)</label>
+                <div class="control" @onfocusout="@(() => ValidateElement(tagsInput))">
+                    <BulmaTagsInput
+                        Data="@(tagsInput.Get(FormModel.DataModel) as IEnumerable<string>)"
+                        EmptyValue="@tagsInput.EmptyValue"
+                        IsReadOnly="@(FormState == FormState.ReadOnly)"
+                        Placeholder="@(tagsInput.Placeholder)"
+                        DataChanged="@((tags) => tagsInput.Set(FormModel.DataModel, tags))" />
+                    <ValidationMessage Messages="@tagsInput.ValidationMessages" />
                 </div>
             }
             else if (elem is CheckboxElement checkbox)
@@ -55,13 +53,13 @@
                         @onfocusout="@(() => ValidateElement(elem))" />
                     @if (elem.Icon != null)
                     {
-                        <span class="icon is-left">
-                            <i class="fas fa-@(elem.Icon)"></i>
+                        <span class="icon is-left @elem.Icon.Size">
+                            <i class="@(elem.Icon.Name)"></i>
                         </span>
                     }
                     <ValidationMessage Messages="@elem.ValidationMessages" />
                 </p>
             }
-        }
-    </div>
+        </div>
+    }
 </form>

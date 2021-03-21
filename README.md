@@ -25,8 +25,10 @@ In your Blazor project, add reference to the Bulma CSS to your `wwwroot/index.ht
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+```
 
-<!-- Also add the Font Awesome icons, if you intend to use them -->
+You can also add the Font Awesome icons, if you intend to use them (or any other glyphs like Material Design Icons).
+```html
 <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 ```
 

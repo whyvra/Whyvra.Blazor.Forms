@@ -1,9 +1,9 @@
 namespace Whyvra.Blazor.Forms.Elements
 {
-    public abstract class FormElement
+    public class IconElement
     {
         public string Name { get; set; }
 
-        public IconElement Icon { get; set; }
+        public string Size { get; set; }
     }
 }
