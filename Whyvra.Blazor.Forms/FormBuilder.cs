@@ -54,6 +54,29 @@ namespace Whyvra.Blazor.Forms
             return this;
         }
 
+        public FormBuilder<T> List<TProperty>(Expression<Func<T, TProperty>> lambda, IEnumerable<PickOption> opts)
+        {
+            var name = lambda.GetPropertyName();
+            var displayName = name.AddSpaces();
+            var expressionPath = lambda.ToString();
+
+            var list = new ListElement
+            {
+                Name = name,
+                DisplayName = displayName,
+                Placeholder = displayName,
+                ValidationPath = expressionPath[(expressionPath.IndexOf('.') + 1)..],
+                PickOptions = opts,
+                Get = lambda.GetGetter(),
+                Set = lambda.GetEnumSetter()
+            };
+
+            _current = name;
+            _elements.Add(name, list);
+
+            return this;
+        }
+
         public FormBuilder<T> Number<TProperty>(Expression<Func<T, TProperty>> lambda)
         {
             var name = lambda.GetPropertyName();

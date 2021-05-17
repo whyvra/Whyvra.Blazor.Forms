@@ -42,6 +42,14 @@
                     </label>
                 </div>
             }
+            else if (elem is ListElement list)
+            {
+                <label>@list.DisplayName</label>
+                <div class="control">
+                    <ListPicker ListElement="@list" DefaultValue="@list.Get(FormModel.DataModel)" OnChanged="@((id) => list.Set(FormModel.DataModel, id))"></ListPicker>
+                    <ValidationMessage Messages="@list.ValidationMessages" />
+                </div>
+            }
             else
             {
                 <label for="@(elem.Name)">@elem.DisplayName</label>

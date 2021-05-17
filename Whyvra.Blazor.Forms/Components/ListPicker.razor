@@ -1,0 +1,56 @@
+@foreach (var option in ListElement.PickOptions)
+{
+    <div class="radio-container @(option.IsChecked ? "is-checked" : "")">
+        <label for="@option.Id">
+            <input type="radio" id="@option.Id" name="list-type" checked=@option.IsChecked
+            @onchange="(async () => await HandleCheck(option))">
+            <div>
+                <i class="@option.Icon"></i>
+            </div>
+            <div>
+                @option.Text
+            </div>
+        </label>
+    </div>
+}
+
+@code
+{
+    [Parameter]
+    public object DefaultValue { get; set; } = null;
+
+    [Parameter]
+    public ListElement ListElement { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnChanged { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (DefaultValue != null)
+        {
+            var option = ListElement.PickOptions.SingleOrDefault(x => x.Value == (int) DefaultValue);
+            if (option != null)
+            {
+                var selected = new[] { option };
+                ListElement.PickOptions.Except(selected).ToList().ForEach(x => x.IsChecked = false);
+                option.IsChecked = true;
+            }
+        }      
+    }
+
+    private async Task HandleCheck(PickOption option)
+    {
+        var selected = new[] { option };
+        ListElement.PickOptions.Except(selected).ToList().ForEach(x => x.IsChecked = false);
+        option.IsChecked = true;
+
+        // Clear validation messages if any
+        if (ListElement.ValidationMessages.Any())
+        {
+            ListElement.ValidationMessages = Enumerable.Empty<string>();
+        }
+
+        await OnChanged.InvokeAsync(option.Value);
+    }
+}

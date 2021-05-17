@@ -18,6 +18,13 @@ namespace Whyvra.Blazor.Forms
             return (x, y) => setter((TModel) x, (TProperty) y);
         }
 
+        public static Action<object, object> GetEnumSetter<TModel, TProperty>(this Expression<Func<TModel, TProperty>> lambda)
+        {
+            var setter = CreateSetter(lambda).Compile();
+            var sourceType = Nullable.GetUnderlyingType(typeof(TProperty));
+            return (x, y) => setter((TModel) x, sourceType == null ? (TProperty) y : (TProperty) Enum.ToObject(sourceType, y));
+        }
+
         private static Expression<Action<TModel, TProperty>> CreateSetter<TModel, TProperty>(Expression<Func<TModel, TProperty>> selector)
         {
             var value = Expression.Parameter(typeof(TProperty));
