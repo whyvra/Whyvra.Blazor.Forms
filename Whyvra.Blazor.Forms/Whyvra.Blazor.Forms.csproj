@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <Authors>whyvra</Authors>
     <Description>A dynamic form builder that binds to your model classes and creates the corresponding HTML form for you.</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -10,15 +10,22 @@
     <RepositoryType>Github</RepositoryType>
   </PropertyGroup>
 
+  
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.2" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.12" />
   </ItemGroup>
 
-    <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

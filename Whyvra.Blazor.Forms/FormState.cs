@@ -4,6 +4,6 @@ namespace Whyvra.Blazor.Forms
     {
         New,
         Edit,
-        ReadOnly
+        Read
     }
 }

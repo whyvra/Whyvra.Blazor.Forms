@@ -1,0 +1,12 @@
+@typeparam TModel
+@inherits WhyvraFormBase<TModel>
+
+<CascadingValue Value="@FormState">
+    <form>
+        @foreach (var component in FormModel.Components.Where(x => x.IsVisible))
+        {
+            <Whyvra.Blazor.Forms.Components.DynamicComponent Type="@component.Type" Parameters="@component.Parameters">
+            </Whyvra.Blazor.Forms.Components.DynamicComponent>
+        }
+    </form>
+</CascadingValue>

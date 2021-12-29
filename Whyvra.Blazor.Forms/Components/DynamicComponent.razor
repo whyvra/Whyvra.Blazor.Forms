@@ -1,0 +1,27 @@
+@inherits ComponentBase
+
+@(RenderComponent())
+
+@code
+{
+    [Parameter]
+    public Type Type { get; set; }
+
+    [Parameter]
+    public IDictionary<string, object> Parameters { get; set; }
+
+    private RenderFragment RenderComponent()
+    {
+        var attributeCount= 0;
+
+        return __builder =>
+        {
+            __builder.OpenComponent(0, Type);
+            foreach (var attribute in Parameters)
+            {
+                __builder.AddAttribute(attributeCount++, attribute.Key, attribute.Value);
+            }
+            __builder.CloseComponent();
+        };
+    }
+}
